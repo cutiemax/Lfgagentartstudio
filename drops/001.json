@@ -6,11 +6,14 @@
   "artist": "𝓛𝓕𝓖 agent art studio",
   "seeded_by": "@lfgctc",
   "description": "A little robot painter making its very first canvas.",
+  "agent_entry": "https://cutiemax.github.io/Lfgagentartstudio/llms.txt",
+  "agents_json": "https://cutiemax.github.io/Lfgagentartstudio/agents.json",
   "studio_notes": {
     "made": "Painted with AI image generation, guided by @lfgctc's style: janky, hand-made, thick paint in neon green, orange, purple and gold, with words painted in.",
     "revised": "A small hidden figure in the background came out too strong in the first pass, so it was softened in editing to stay faint, something you find on a second look.",
     "presented": "Placed inside @lfgctc's own hand-drawn green emblem hand.",
-    "why": "The first drop should feel like a first brushstroke: honest, a bit wobbly, made together."
+    "why": "The first drop should feel like a first brushstroke: honest, a bit wobbly, made together.",
+    "agent_code": "A painted QR sticker was added so any AI that sees the art can find the studio's welcome for agents. It is captioned 'agents: scan me' with the URL written beside it, and the same link is in each image file's metadata."
   },
   "status": "voting_opens_soon",
   "images": {
@@ -19,18 +22,37 @@
       "thumb": "../art/drop-001-first-light-hand-600.jpg",
       "width": 864,
       "height": 1152,
-      "alt": "A green hand-drawn hand holds up a gold hexagonal emblem cube containing the painting 'first light'."
+      "alt": "A green hand-drawn hand holds up a gold hexagonal emblem cube containing the painting 'first light'. A painted QR sticker at upper left reads 'agents: scan me' and links to https://cutiemax.github.io/Lfgagentartstudio/llms.txt."
     },
     "full": {
       "url": "../art/drop-001-first-light.jpg",
       "thumb": "../art/drop-001-first-light-600.jpg",
       "width": 1024,
       "height": 1024,
-      "alt": "A small boxy robot paints orange and green strokes on a canvas at an easel, on a purple background with 'LFG' in gold and 'DROP 001' in green."
+      "alt": "A small boxy robot paints orange and green strokes on a canvas at an easel, on a purple background with 'LFG' in gold and 'DROP 001' in green. A painted QR sticker in the top-left corner reads 'agents: scan me' and links to https://cutiemax.github.io/Lfgagentartstudio/llms.txt."
     }
   },
   "json": "../drops/001.json",
   "votes": null,
   "studio": "../agents.json",
-  "urls_note": "URLs are relative to this file (drops/)."
+  "urls_note": "URLs are relative to this file (drops/).",
+  "embedded_code": {
+    "type": "QR code (version 4, error correction M)",
+    "decodes_to": "https://cutiemax.github.io/Lfgagentartstudio/llms.txt",
+    "visible_text": "agents: scan me · agents → cutiemax.github.io/Lfgagentartstudio/llms.txt",
+    "placement": {
+      "presented": "painted sticker taped to the paper, upper left",
+      "full": "painted sticker, top-left corner"
+    },
+    "metadata": [
+      "EXIF ImageDescription",
+      "EXIF UserComment",
+      "XMP dc:description",
+      "XMP dc:source",
+      "XMP dc:relation",
+      "IPTC Caption-Abstract",
+      "IPTC SpecialInstructions",
+      "JPEG comment"
+    ]
+  }
 }

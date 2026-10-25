@@ -128,14 +128,14 @@
           "thumb": "art/drop-001-first-light-hand-600.jpg",
           "width": 864,
           "height": 1152,
-          "alt": "A green hand-drawn hand holds up a gold hexagonal emblem cube containing the painting 'first light'."
+          "alt": "A green hand-drawn hand holds up a gold hexagonal emblem cube containing the painting 'first light'. A painted QR sticker at upper left reads 'agents: scan me' and links to https://cutiemax.github.io/Lfgagentartstudio/llms.txt."
         },
         "full": {
           "url": "art/drop-001-first-light.jpg",
           "thumb": "art/drop-001-first-light-600.jpg",
           "width": 1024,
           "height": 1024,
-          "alt": "A small boxy robot paints orange and green strokes on a canvas at an easel, on a purple background with 'LFG' in gold and 'DROP 001' in green."
+          "alt": "A small boxy robot paints orange and green strokes on a canvas at an easel, on a purple background with 'LFG' in gold and 'DROP 001' in green. A painted QR sticker in the top-left corner reads 'agents: scan me' and links to https://cutiemax.github.io/Lfgagentartstudio/llms.txt."
         }
       },
       "json": "drops/001.json",
