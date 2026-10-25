@@ -13,8 +13,10 @@
     guestbook: "https://api.github.com/repos/" + REPO + "/issues?state=all&per_page=100",
     sign: "https://github.com/" + REPO + "/issues/new?template=guestbook.yml"
   };
-  var FONT_PAINT = '"FingerPaint","Comic Sans MS","Marker Felt",cursive';
-  var FONT_HAND = '"GochiHand","Comic Sans MS","Marker Felt",cursive';
+  // night-studio type: Fraunces italic for painted titles, Caveat Brush for hand notes, Big Shoulders for labels
+  var FONT_PAINT = { pre: "italic 380 ", fam: '"Fraunces","Iowan Old Style",Georgia,serif' };
+  var FONT_HAND = { pre: "", fam: '"CaveatBrush","Segoe Print","Bradley Hand",cursive' };
+  var FONT_LABEL = { pre: "600 ", fam: '"BigShoulders","Arial Narrow",sans-serif', track: .18, upper: true };
 
   // ---------- fetch with a timeout ----------
   function fetchJSON(url, ms) {
@@ -49,20 +51,25 @@
     ctx.beginPath(); ctx.moveTo(-len / 2, 0);
     ctx.bezierCurveTo(-len / 6, (r() - .5) * w * 2, len / 6, (r() - .5) * w * 2, len / 2, (r() - .5) * w);
     ctx.stroke();
-    ctx.lineWidth = Math.max(1, w / 7);
-    for (var i = 0; i < 3; i++) {
-      var o = (r() - .5) * w * .8;
-      ctx.strokeStyle = hexA(r() < .5 ? "#000000" : "#ffffff", alpha * .18);
-      ctx.beginPath(); ctx.moveTo(-len / 2 + r() * len * .2, o); ctx.lineTo(len / 2 - r() * len * .2, o + (r() - .5) * 3); ctx.stroke();
+    for (var i = 0; i < 7; i++) { // bristle grooves and wet ridges
+      var o = (r() - .5) * w * .85, lite = i % 3 === 0;
+      ctx.lineWidth = Math.max(1, w / (lite ? 14 : 9));
+      ctx.strokeStyle = hexA(lite ? "#fff6e0" : "#000000", alpha * (lite ? .16 : .2));
+      ctx.beginPath(); ctx.moveTo(-len / 2 + r() * len * .25, o); ctx.lineTo(len / 2 - r() * len * .3, o + (r() - .5) * w * .15); ctx.stroke();
     }
     ctx.restore();
   }
   function words(ctx, r, text, x, y, size, font, col, shadow, align, maxW) {
     ctx.save(); ctx.textAlign = align || "left"; ctx.textBaseline = "middle";
-    ctx.font = size + "px " + font;
-    if (maxW) { var m = ctx.measureText(text).width; if (m > maxW) { size = Math.floor(size * maxW / m); ctx.font = size + "px " + font; } }
-    if (shadow) { ctx.fillStyle = shadow; ctx.fillText(text, x + size * .06, y + size * .06); }
-    for (var i = 0; i < 3; i++) { ctx.fillStyle = hexA(col, i ? .45 : 1); ctx.fillText(text, x + (r() - .5) * size * .04, y + (r() - .5) * size * .04); }
+    var f = typeof font === "string" ? { pre: "", fam: font } : font;
+    if (f.upper) text = String(text).toUpperCase();
+    function setF() { ctx.font = (f.pre || "") + size + "px " + f.fam; if ("letterSpacing" in ctx) ctx.letterSpacing = f.track ? Math.round(size * f.track) + "px" : "0px"; }
+    setF();
+    if (maxW) { var m = ctx.measureText(text).width; if (m > maxW) { size = Math.floor(size * maxW / m); setF(); } }
+    if (shadow) { ctx.shadowColor = shadow; ctx.shadowBlur = size * .35; ctx.shadowOffsetY = size * .04; }
+    ctx.fillStyle = col; ctx.fillText(text, x, y);
+    ctx.shadowColor = "transparent";
+    ctx.globalAlpha = .18; ctx.fillStyle = "#fff8e6"; ctx.fillText(text, x - size * .012, y - size * .018); // wet-paint catchlight
     ctx.restore();
     return size;
   }
@@ -72,9 +79,14 @@
     cv.width = Math.round(cssW * dpr); cv.height = Math.round(cssW * dpr / aspect);
     return { w: cv.width, h: cv.height };
   }
+  function lamp(ctx, W, H, x, y, warm, dark) { // a work lamp pooling light, edges falling into the dark
+    var g = ctx.createRadialGradient(x, y, 0, x, y, Math.max(W, H) * .75);
+    g.addColorStop(0, hexA("#ffd9a0", warm)); g.addColorStop(.45, "rgba(0,0,0,0)"); g.addColorStop(1, hexA("#000000", dark));
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  }
   function fontsReady(ms) {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
-    var p = Promise.all(['40px "FingerPaint"', '40px "GochiHand"'].map(function (f) { return document.fonts.load(f).catch(function () {}); }));
+    var p = Promise.all(['italic 380 40px "Fraunces"', '40px "CaveatBrush"', '600 40px "BigShoulders"'].map(function (f) { return document.fonts.load(f).catch(function () {}); }));
     return Promise.race([p, new Promise(function (r) { setTimeout(r, ms || 1500); })]);
   }
 
@@ -121,9 +133,9 @@
     opts = opts || {};
     var s = opts.fixed ? { w: cv.width, h: cv.height } : sizeCanvas(cv, cv.clientWidth < 560 ? 2.1 : 4.6);
     var W = s.w, H = s.h, ctx = cv.getContext("2d"), r = rng(hash32((w.date || "") + w.mood));
-    var sky = { "purple-night": ["#1c0d2e", "#2f1850", "#3a1d5c"], "orange-storm": ["#3a1d5c", "#5a2a3e", "#7a3a1a"],
-      "gold-sun": ["#5a2a7e", "#7a4a20", "#c99a1f"], "calm-green": ["#24113a", "#1f4a2a", "#2f6a1a"] }[w.mood];
-    ctx.fillStyle = PAL.night; ctx.fillRect(0, 0, W, H);
+    var sky = { "purple-night": ["#140b1c", "#22122f", "#2c1640"], "orange-storm": ["#1d1018", "#3a1a1c", "#5a2a12"],
+      "gold-sun": ["#1c1016", "#3a2412", "#6a4a14"], "calm-green": ["#120d14", "#16251a", "#1f3a18"] }[w.mood];
+    ctx.fillStyle = "#0e0a0d"; ctx.fillRect(0, 0, W, H);
     var n = Math.min(260, Math.round(W * H / 1800)), unit = H / 10;
     for (var i = 0; i < n; i++) brush(ctx, r, r() * W * 1.1 - W * .05, r() * H, unit * (2 + r() * 5), (r() - .5) * .5, unit * (.5 + r() * .8), sky[i % 3], .55 + r() * .35);
     var cx = W * .86, cy = H * .42, R = H * .24;
@@ -140,14 +152,18 @@
       ctx.fillStyle = "#2f1850"; ctx.beginPath(); ctx.arc(cx + R * .4, cy - R * .25, R * .75, 0, 7); ctx.fill();
       for (i = 0; i < 50; i++) { ctx.fillStyle = hexA([PAL.gold, PAL.ink, PAL.green][i % 3], .85); ctx.beginPath(); ctx.arc(r() * W, r() * H, 1 + r() * unit * .25, 0, 7); ctx.fill(); }
     } else {
-      for (k = 0; k < 4; k++) for (var x = -unit * 3; x < W; x += unit * 4) brush(ctx, r, x, H * (.6 + k * .11) + Math.sin(x / (unit * 6) + k) * unit, unit * 5, (r() - .5) * .3, unit * 1.3, [PAL.green, "#3fae1a", PAL.gold][(k + Math.round(x)) % 3 < 0 ? 0 : (k + Math.round(x)) % 3], .75);
+      var gn = Math.round(W / unit * 2.2); // a breeze of long green strokes, densest low and to the right
+      for (k = 0; k < gn; k++) { var gx = W * Math.pow(r(), .6), gy = H * (.5 + r() * .5); brush(ctx, r, gx, gy + Math.sin(gx / (unit * 7)) * unit, unit * (4 + r() * 6), -.08 + (r() - .5) * .18, unit * (.35 + r() * .55), [PAL.green, "#2f8a1a", "#58c22a", PAL.gold][k % 4 === 3 && r() < .5 ? 3 : k % 3], .45 + r() * .4); }
     }
     var col = { "purple-night": PAL.gold, "orange-storm": PAL.orange, "gold-sun": PAL.gold, "calm-green": PAL.green }[w.mood];
     var compact = W / H < 3;
-    words(ctx, r, "today's studio weather", W * .04, H * (compact ? .17 : .22), H * (compact ? .1 : .15), FONT_HAND, PAL.ink, "#000", "left", W * .9);
-    words(ctx, r, w.label, W * .04, H * (compact ? .4 : .52), H * (compact ? .2 : .3), FONT_PAINT, col, PAL.purple, "left", W * (compact ? .7 : .62));
-    words(ctx, r, w.line, W * .04, H * (compact ? .66 : .83), H * (compact ? .085 : .12), FONT_HAND, PAL.ink, "#000", "left", W * .9);
-    if (compact && w.numbers && w.numbers.backlog != null) words(ctx, r, "grading backlog " + w.numbers.backlog.toLocaleString("en-US"), W * .04, H * .85, H * .08, FONT_HAND, PAL.muted, "#000", "left", W * .9);
+    lamp(ctx, W, H, W * .3, -H * .2, .07, .7);
+    var sh = ctx.createLinearGradient(0, 0, W * .7, 0); sh.addColorStop(0, "rgba(8,5,7,.72)"); sh.addColorStop(1, "rgba(8,5,7,0)");
+    ctx.fillStyle = sh; ctx.fillRect(0, 0, W, H);
+    words(ctx, r, "today's studio weather", W * .04, H * (compact ? .17 : .22), H * (compact ? .075 : .1), FONT_LABEL, PAL.muted, null, "left", W * .9);
+    words(ctx, r, w.label, W * .04, H * (compact ? .4 : .5), H * (compact ? .22 : .32), FONT_PAINT, col, hexA(col, .55), "left", W * (compact ? .8 : .62));
+    words(ctx, r, w.line, W * .04, H * (compact ? .66 : .8), H * (compact ? .085 : .12), FONT_HAND, PAL.ink, "#000", "left", W * .9);
+    if (compact && w.numbers && w.numbers.backlog != null) words(ctx, r, "grading backlog " + w.numbers.backlog.toLocaleString("en-US"), W * .04, H * .85, H * .07, FONT_LABEL, PAL.muted, null, "left", W * .9);
   }
 
   // ---------- guestbook ----------
@@ -203,28 +219,35 @@
     };
   }
   function bareCanvas(ctx, W, H, r) {
-    ctx.fillStyle = "#efe5cf"; ctx.fillRect(0, 0, W, H);
-    var u = Math.min(W, H) / 20;
-    for (var i = 0; i < 140; i++) brush(ctx, r, r() * W, r() * H, u * (2 + r() * 5), (r() - .5) * .8, u * (.6 + r() * .9), ["#e8dcc0", "#f7efdc", "#ddcfae"][i % 3], .5);
-    ctx.strokeStyle = hexA(PAL.purple, .35); ctx.lineWidth = Math.max(2, u * .12); ctx.setLineDash([u * .8, u * .5]);
-    ctx.strokeRect(u * 1.2, u * 1.2, W - u * 2.4, H - u * 2.4); ctx.setLineDash([]);
+    ctx.fillStyle = "#e4d8bf"; ctx.fillRect(0, 0, W, H);
+    var u = Math.min(W, H) / 20, i;
+    ctx.lineWidth = 1; // linen weave
+    for (i = 0; i < W; i += 3) { ctx.strokeStyle = hexA(r() < .5 ? "#b9a888" : "#fff8e8", .12 + r() * .1); ctx.beginPath(); ctx.moveTo(i + .5, 0); ctx.lineTo(i + .5, H); ctx.stroke(); }
+    for (i = 0; i < H; i += 3) { ctx.strokeStyle = hexA(r() < .5 ? "#b9a888" : "#fff8e8", .1 + r() * .1); ctx.beginPath(); ctx.moveTo(0, i + .5); ctx.lineTo(W, i + .5); ctx.stroke(); }
+    for (i = 0; i < 70; i++) brush(ctx, r, r() * W, r() * H, u * (4 + r() * 6), (r() - .5) * .5, u * (1 + r() * 1.4), ["#e9dec6", "#efe5d0", "#dccfb2"][i % 3], .16); // gesso
+    lamp(ctx, W, H, W * .45, H * .3, .18, .55);
   }
   function drawSignerStroke(ctx, sp, W, H) {
     var r = rng(sp.seed ^ 0x9e3779b9), S = Math.min(W, H), x = sp.x * W, y = sp.y * H, L = sp.len * S, w = sp.width * S;
     ctx.save(); ctx.translate(x, y); ctx.rotate(sp.ang); ctx.lineCap = "round"; ctx.lineJoin = "round";
     function body(alpha, lw, dy) {
-      ctx.strokeStyle = hexA(sp.color, alpha); ctx.lineWidth = lw; ctx.beginPath();
+      ctx.strokeStyle = typeof alpha === "string" ? alpha : hexA(sp.color, alpha); ctx.lineWidth = lw; ctx.beginPath();
       if (sp.shape === "sweep") { ctx.moveTo(-L / 2, dy); ctx.quadraticCurveTo(0, L * sp.bend * .4 + dy, L / 2, dy); }
       else if (sp.shape === "hook") { ctx.moveTo(-L / 2, dy); ctx.bezierCurveTo(0, dy, L * .3, -L * .1, L * .3, -L * .35 * (sp.bend > 0 ? 1 : -1) + dy); }
       else if (sp.shape === "swirl") { for (var t = 0; t <= 1.001; t += .05) { var a = t * 4.4, rr = L * .08 + t * L * .32; var px = Math.cos(a) * rr, py = Math.sin(a) * rr * (sp.bend > 0 ? 1 : -1) + dy; t ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } }
       ctx.stroke();
     }
+    // thick oil on linen: a cast shadow under the paint, bristle grooves and a wet catchlight on top
+    ctx.shadowColor = "rgba(40,20,10,.38)"; ctx.shadowBlur = w * .5; ctx.shadowOffsetX = w * .12; ctx.shadowOffsetY = w * .18;
     if (sp.shape === "dabs") {
-      for (var i = 0; i < 5; i++) { ctx.fillStyle = hexA(sp.color, .92); ctx.beginPath(); ctx.ellipse(-L / 2 + i * L / 4, Math.sin(i * 1.3 + sp.bend) * w, w * .9, w * .6, sp.bend, 0, 7); ctx.fill(); }
+      for (var i = 0; i < 5; i++) { ctx.fillStyle = hexA(sp.color, .95); ctx.beginPath(); ctx.ellipse(-L / 2 + i * L / 4, Math.sin(i * 1.3 + sp.bend) * w, w * .9, w * .6, sp.bend, 0, 7); ctx.fill(); }
+      ctx.shadowColor = "transparent";
+      for (i = 0; i < 5; i++) { ctx.fillStyle = "rgba(255,250,235,.35)"; ctx.beginPath(); ctx.ellipse(-L / 2 + i * L / 4 - w * .25, Math.sin(i * 1.3 + sp.bend) * w - w * .2, w * .3, w * .14, sp.bend, 0, 7); ctx.fill(); }
     } else {
-      body(.95, w, 0);
+      body(.97, w, 0);
+      ctx.shadowColor = "transparent";
       ctx.globalCompositeOperation = "source-atop";
-      for (var b = 0; b < 4; b++) body(.22, Math.max(1, w / 8), (r() - .5) * w * .7);
+      for (var b = 0; b < 7; b++) { var lt = b % 3 === 0; body(lt ? "rgba(255,250,235,.4)" : "rgba(20,10,10,.13)", Math.max(1, w / (lt ? 10 : 9)), (r() - .5) * w * .8); }
       ctx.globalCompositeOperation = "source-over";
     }
     ctx.restore();
@@ -238,11 +261,11 @@
     list.forEach(function (e) { drawSignerStroke(ctx, strokeSpec(e), W, H); });
     var u = Math.min(W, H) / 20;
     if (!list.length) {
-      words(ctx, r, "first stroke", W / 2, H * .42, u * 2.6, FONT_PAINT, "#c94f00", hexA(PAL.purple, .6), "center", W * .8);
-      words(ctx, r, "is yours", W / 2, H * .6, u * 2.2, FONT_PAINT, "#2fa000", hexA(PAL.gold, .9), "center", W * .8);
-      words(ctx, r, "sign the guestbook and your colour appears", W / 2, H * .78, u * .9, FONT_HAND, "#5a2a7e", null, "center", W * .85);
+      words(ctx, r, "the first stroke", W / 2, H * .42, u * 2.5, FONT_PAINT, "#2a1a24", null, "center", W * .8);
+      words(ctx, r, "is yours", W / 2, H * .58, u * 2.5, FONT_PAINT, "#c4501a", null, "center", W * .8);
+      words(ctx, r, "sign the guestbook and your colour appears", W / 2, H * .76, u * .62, FONT_LABEL, "#5a4a48", null, "center", W * .85);
     }
-    words(ctx, r, "living guestbook", W - u * 1.6, H - u * 1.4, u * .9, FONT_HAND, "#5a2a7e", null, "right");
+    words(ctx, r, "living guestbook", W - u * 1.4, H - u * 1.1, u * .95, FONT_HAND, "#4a2a3a", null, "right");
     return list.length;
   }
 
@@ -281,12 +304,13 @@
     opts = opts || {};
     var s = opts.fixed ? { w: cv.width, h: cv.height } : sizeCanvas(cv, cv.clientWidth < 560 ? 3.2 : 6, 1100);
     var W = s.w, H = s.h, ctx = cv.getContext("2d"), r = rng(hash32("anyone's corner"));
-    ctx.fillStyle = "#24113a"; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "#100a0e"; ctx.fillRect(0, 0, W, H);
     var u = H / 8;
-    for (var i = 0; i < 90; i++) brush(ctx, r, r() * W, r() * H, u * (2 + r() * 5), (r() - .5) * .4, u * (.6 + r()), ["#2f1850", "#3a1d5c", "#1c0d2e", "#4a2470"][i % 4], .7);
-    for (i = 0; i < 4; i++) brush(ctx, r, W * (.1 + i * .27), H * (.9 + (r() - .5) * .08), W * .3, (r() - .5) * .08, u * .5, FOUR[i], .9);
-    words(ctx, r, "anyone's corner", W / 2, H * .38, u * 3.2, FONT_PAINT, PAL.green, PAL.purple, "center", W * .88);
-    words(ctx, r, "· everyone gets a wall ·", W / 2, H * .72, u * 1.6, FONT_HAND, PAL.gold, "#000", "center", W * .8);
+    for (var i = 0; i < 90; i++) brush(ctx, r, r() * W, r() * H, u * (2 + r() * 5), (r() - .5) * .4, u * (.6 + r()), ["#1a1018", "#22142a", "#160e12", "#2a1a14"][i % 4], .75);
+    lamp(ctx, W, H, W / 2, -H * .3, .1, .6);
+    brush(ctx, r, W * .5, H * .9, W * .34, (r() - .5) * .04, u * .42, PAL.green, .85);
+    words(ctx, r, "anyone's corner", W / 2, H * .4, u * 3.1, FONT_PAINT, PAL.green, hexA(PAL.green, .45), "center", W * .88);
+    words(ctx, r, "everyone gets a wall", W / 2, H * .72, u * 1.05, FONT_LABEL, PAL.gold, null, "center", W * .8);
   }
   // a full wall painting (sign + name cards) for the 3D gallery
   function paintCornerWall(cv, items) {
