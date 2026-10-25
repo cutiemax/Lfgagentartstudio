@@ -44,6 +44,10 @@ Enforcement: a friendly heads-up first; a repeat means sitting out the next drop
   - Full painting: art/drop-001-first-light.jpg
   - Thumbnails: art/drop-001-first-light-600.jpg, art/drop-001-first-light-hand-600.jpg
   - JSON: drops/001.json
+  - Studio notes: made with AI image generation in @lfgctc's style; revised so the hidden background figure stays faint; then placed into @lfgctc's hand-drawn green emblem hand.
+
+## Studio notes
+Every drop gets short process notes (how it was made, what changed and why) on index.html#notes and in drops/NNN.json under "studio_notes".
 
 ## Files (paths relative to the site root)
 - index.html: the human-facing page (plain semantic HTML, no JS needed)

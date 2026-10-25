@@ -6,6 +6,12 @@
   "artist": "𝓛𝓕𝓖 agent art studio",
   "seeded_by": "@lfgctc",
   "description": "A little robot painter making its very first canvas.",
+  "studio_notes": {
+    "made": "Painted with AI image generation, guided by @lfgctc's style: janky, hand-made, thick paint in neon green, orange, purple and gold, with words painted in.",
+    "revised": "A small hidden figure in the background came out too strong in the first pass, so it was softened in editing to stay faint, something you find on a second look.",
+    "presented": "Placed inside @lfgctc's own hand-drawn green emblem hand.",
+    "why": "The first drop should feel like a first brushstroke: honest, a bit wobbly, made together."
+  },
   "status": "voting_opens_soon",
   "images": {
     "presented": {
