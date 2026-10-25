@@ -226,21 +226,22 @@ function wallWords(lines, w = 1024, h = 512) {
 
 // ---------- placards: small museum cards, lamp-lit ----------
 function placardTexture(p) {
-  const W = 512, H = 256, c = makeCanvas(W, H), x = c.getContext("2d");
-  x.fillStyle = p.empty ? "#16100f" : "#ece3d1"; x.fillRect(0, 0, W, H);
-  const paperCols = p.empty ? ["#1d1514", "#110c0b", "#221917"] : ["#e6dcc8", "#f3ebdb", "#ddd1ba"];
-  for (let i = 0; i < 60; i++) stroke(x, rr(0, W), rr(0, H), rr(60, 200), rr(-0.08, 0.08), rr(10, 26), pick(paperCols), 0.35);
-  x.strokeStyle = hexA(p.border, p.empty ? 0.55 : 0.8); x.lineWidth = 2; x.strokeRect(14, 14, W - 28, H - 28);
-  const ink = p.empty ? C.ink : "#1a1214", soft = p.empty ? "#9c8f8a" : "#6a5c58";
-  paintText(x, p.badge.toUpperCase(), 36, 52, `700 30px ${FONT_BANG}`, p.empty ? p.badgeColor : darkOf(p.badgeColor), { align: "left", shadow: null, track: 4 });
-  if (p.right) paintText(x, String(p.right).toUpperCase(), W - 36, 52, `600 22px ${FONT_BANG}`, soft, { align: "right", shadow: null, track: 3 });
-  x.fillStyle = hexA(p.border, 0.9); x.fillRect(36, 76, 56, 3);
-  paintText(x, p.title, 36, 120, `italic 400 46px ${FONT_PAINT}`, ink, { align: "left", shadow: null, maxWidth: W - 72 });
-  x.font = `400 24px ${FONT_SANS}`; x.fillStyle = soft; x.textAlign = "left"; x.textBaseline = "middle";
+  const W = 768, H = 384, c = makeCanvas(W, H), x = c.getContext("2d");
+  x.fillStyle = p.empty ? "#16100f" : "#efe7d6"; x.fillRect(0, 0, W, H);
+  const paperCols = p.empty ? ["#1d1514", "#110c0b", "#221917"] : ["#e9e0cd", "#f5eee0", "#e2d7c2"];
+  for (let i = 0; i < 60; i++) stroke(x, rr(0, W), rr(0, H), rr(90, 300), rr(-0.08, 0.08), rr(14, 36), pick(paperCols), 0.3);
+  x.strokeStyle = hexA(p.border, p.empty ? 0.6 : 0.85); x.lineWidth = 3; x.strokeRect(20, 20, W - 40, H - 40);
+  const ink = p.empty ? C.ink : "#140e10", soft = p.empty ? "#b3a7a1" : "#3f3431";
+  paintText(x, p.badge.toUpperCase(), 54, 78, `700 46px ${FONT_BANG}`, p.empty ? p.badgeColor : darkOf(p.badgeColor), { align: "left", shadow: null, track: 5 });
+  if (p.right) paintText(x, String(p.right).toUpperCase(), W - 54, 78, `600 34px ${FONT_BANG}`, soft, { align: "right", shadow: null, track: 4 });
+  x.fillStyle = hexA(p.border, 0.9); x.fillRect(54, 114, 84, 4);
+  paintText(x, p.title, 54, 178, `italic 500 68px ${FONT_PAINT}`, ink, { align: "left", shadow: null, maxWidth: W - 108 });
+  x.font = `500 34px ${FONT_SANS}`; x.fillStyle = soft; x.textAlign = "left"; x.textBaseline = "middle";
   const words = (p.line || "").split(" "); const lines = []; let cur = "";
-  for (const w of words) { const t = cur ? cur + " " + w : w; if (x.measureText(t).width > W - 72 && cur) { lines.push(cur); cur = w; } else cur = t; }
+  for (const w of words) { const t = cur ? cur + " " + w : w; if (x.measureText(t).width > W - 108 && cur) { lines.push(cur); cur = w; } else cur = t; }
   if (cur) lines.push(cur);
-  lines.slice(0, 2).forEach((l, i) => x.fillText(l, 36, 172 + i * 32));
+  if (lines.length > 2) { lines.length = 2; lines[1] = lines[1].replace(/\s*\S*$/, "") + "…"; }
+  lines.forEach((l, i) => x.fillText(l, 54, 256 + i * 46));
   return tex(c);
 }
 function darkOf(hex) { // a readable ink version of a neon on cream card
@@ -254,7 +255,7 @@ function emptyArtTexture(n) {
   for (let i = 0; i < 90; i++) stroke(x, rr(0, W), rr(0, H), rr(60, 200), rr(-0.5, 0.5), rr(14, 34), pick(["#211714", "#140e0c", "#2a1d18"]), 0.45);
   lampPool(x, W / 2, H * 0.32, W * 0.75, H * 0.6, 0.12);
   for (let i = 0; i < 3; i++) stroke(x, W / 2 + rr(-90, 90), H * 0.3 + rr(-60, 60), rr(90, 180), rr(-0.8, 0.8), rr(6, 12), pick([C.purple, C.orange, C.green]), 0.32);
-  paintText(x, `№ ${String(n).padStart(3, "0")}`, W / 2, H / 2 + 40, `italic 300 76px ${FONT_PAINT}`, C.ink, { shadow: "rgba(0,0,0,.8)" });
+  paintText(x, `Nº ${String(n).padStart(3, "0")}`, W / 2, H / 2 + 40, `italic 300 76px ${FONT_PAINT}`, C.ink, { shadow: "rgba(0,0,0,.8)" });
   paintText(x, "NEXT DROP COMING", W / 2, H / 2 + 120, `600 24px ${FONT_BANG}`, C.gold, { shadow: null, track: 5 });
   return tex(c);
 }
@@ -407,10 +408,10 @@ function buildRoom(slotsPerWall) {
     { text: word, x: 36, y: 140, font: `italic 300 104px ${FONT_PAINT}`, color: C.ink, opts: { align: "left", shadow: "rgba(0,0,0,.8)", maxWidth: 960 } },
     { img, x: 30, y: 192, w: 520, h: 60, alpha: 0.95 },
   ], 1024, 256);
-  const tl = header("the timeline →", "№ 01 · ONE DROP A DAY", C.green, "uline");
+  const tl = header("the timeline →", "NO. 01 · ONE DROP A DAY", C.green, "uline");
   const tlm = new THREE.Mesh(new THREE.PlaneGeometry(2.8, 0.7), new THREE.MeshBasicMaterial({ map: tl, transparent: true }));
   tlm.position.set(-ROOM_W / 2 + 0.03, 2.75, Z_FRONT - FIRST + 2.45); tlm.rotation.y = Math.PI / 2; scene.add(tlm);
-  const tests = header("test pieces", "№ 02 · STUDIES", C.orange, "uline2");
+  const tests = header("test pieces", "NO. 02 · STUDIES", C.orange, "uline2");
   const tsm = new THREE.Mesh(new THREE.PlaneGeometry(2.8, 0.7), new THREE.MeshBasicMaterial({ map: tests, transparent: true }));
   tsm.position.set(ROOM_W / 2 - 0.03, 2.75, Z_FRONT - FIRST + 1.15); tsm.rotation.y = -Math.PI / 2; scene.add(tsm);
 
@@ -422,8 +423,8 @@ function buildRoom(slotsPerWall) {
   const bulbGeo = new THREE.SphereGeometry(0.07, 12, 8);
   const cordMat = new THREE.LineBasicMaterial({ color: 0x050304 });
   for (let i = 0; i < nLamps; i++) {
-    const z = (Z_FRONT - 4.2) - i * ((ROOM_L - 6.4) / Math.max(1, nLamps - 1));
-    const y = ROOM_H - 1.0;
+    const z = (Z_FRONT - 4.2) - i * ((ROOM_L - 7.6) / Math.max(1, nLamps - 1));
+    const y = ROOM_H - 0.75;
     const pl = new THREE.PointLight(0xffc98a, 6, 9, 1.6); pl.position.set(0, y - 0.2, z); scene.add(pl);
     const shade = new THREE.Mesh(shadeGeo, shadeMat); shade.position.set(0, y, z); scene.add(shade);
     const bulb = new THREE.Mesh(bulbGeo, new THREE.MeshBasicMaterial({ color: 0xfff0d0 })); bulb.position.set(0, y - 0.12, z); scene.add(bulb);
@@ -496,8 +497,8 @@ function hangFrame({ wallX, z, facing, artTex, aspect, placard, info, frameCol, 
 
   const holder = new THREE.Group();
   holder.add(g);
-  const pl = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.31), new THREE.MeshBasicMaterial({ map: placardTexture(placard), color: info.empty ? 0xffffff : 0xd8d0c4 }));
-  pl.position.set(Wd / 2 - 0.31 + 0.05, 2.1 - h / 2 - t - 0.42, 0.02); holder.add(pl);
+  const pl = new THREE.Mesh(new THREE.PlaneGeometry(0.84, 0.42), new THREE.MeshBasicMaterial({ map: placardTexture(placard), color: info.empty ? 0xffffff : 0xe8e0d4 }));
+  pl.position.set(Wd / 2 - 0.42 + 0.05, 2.1 - h / 2 - t - 0.48, 0.02); holder.add(pl);
   holder.position.set(wallX, 0, z); holder.rotation.y = facing;
   scene.add(holder);
 
@@ -607,7 +608,7 @@ function gotoStop(i) {
   curStop = (i + stops.length) % stops.length;
   const s = stops[curStop];
   glide = { pos: s.pos.clone(), yaw: s.yaw, pitch: s.pitch };
-  const now = $("now"); now.textContent = s.info.empty ? `#${String(s.info.number).padStart(3, "0")} · next drop coming` : `${s.info.badge} · "${s.info.title}"`;
+  const now = $("now"); now.textContent = s.info.empty ? `#${String(s.info.number).padStart(3, "0")} · next drop coming` : `${s.info.badge} · “${s.info.title}”`;
   now.style.opacity = 1;
   hideHint();
 }
@@ -648,7 +649,7 @@ function openInfo(info) {
   } else {
     $("m-img").style.display = "block"; $("m-img").src = info.image; $("m-img").alt = info.alt || `${info.badge}: ${info.title}`;
     $("m-badge").textContent = info.badge; $("m-badge").className = info.test ? "badge test" : "badge";
-    $("m-title").textContent = `"${info.title}"`;
+    $("m-title").textContent = `“${info.title}”`;
     $("m-meta").textContent = `${info.date} · by ${info.artist}`;
     $("m-desc").textContent = info.description || "";
     $("m-full").style.display = ""; $("m-full").href = info.image;
@@ -770,7 +771,7 @@ async function main() {
       const info = { ...d, badge: `Drop #${num}` };
       const a = dropArt[i] || { texture: emptyArtTexture(d.number).texture, aspect: 0.75 };
       hangFrame({ wallX, z, facing, artTex: a.texture, aspect: a.aspect, info, frameCol: fc[0], accent: fc[1], tilt,
-        placard: { badge: `Drop #${num}`, badgeColor: C.green, right: d.date, title: `"${d.title}"`, line: `by ${d.artist}`, border: fc[1] } });
+        placard: { badge: `Drop #${num}`, badgeColor: C.green, right: d.date, title: `“${d.title}”`, line: `by ${d.artist}`, border: fc[1] } });
     } else {
       const n = (drops.length ? drops[drops.length - 1].number : 0) + (i - drops.length) + 1;
       const info = { empty: true, number: n };
