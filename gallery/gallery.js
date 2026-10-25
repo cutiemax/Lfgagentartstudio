@@ -383,14 +383,12 @@ function buildRoom(slotsPerWall) {
   const door = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 3.2), new THREE.MeshBasicMaterial({ map: tex(doorC) }));
   door.position.set(0, 1.6, Z_FRONT - 0.02); door.rotation.y = Math.PI;
   door.userData = { href: "../index.html" }; clickables.push(door); scene.add(door);
+  // (the entrance wall's two sides hold anyone's corner and the living guestbook, hung in main())
   const love = wallWords([
-    { text: "humans + bots welcome", y: 150, font: `76px ${FONT_HAND}`, color: C.gold, opts: { shadow: C.purple, drips: 3, maxWidth: 940 } },
-    { hearts: [[150, 330, 50, C.green, -0.2], [512, 330, 56, C.orange, 0.05], [874, 330, 50, C.purple, 0.25]] },
-  ], 1024, 420);
-  for (const sx of [-1, 1]) {
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(3.6, 1.48), new THREE.MeshBasicMaterial({ map: love, transparent: true }));
-    m.position.set(sx * 3.75, 2.45, Z_FRONT - 0.02); m.rotation.y = Math.PI; m.rotation.z = sx * 0.04; scene.add(m);
-  }
+    { text: "humans + bots welcome", y: 128, font: `84px ${FONT_HAND}`, color: C.gold, opts: { shadow: C.purple, drips: 2, maxWidth: 980 } },
+  ], 1024, 256);
+  const lm = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 0.6), new THREE.MeshBasicMaterial({ map: love, transparent: true }));
+  lm.position.set(0, 3.45, Z_FRONT - 0.02); lm.rotation.y = Math.PI; scene.add(lm);
 
   // side wall headers
   const tl = wallWords([{ text: "the timeline →", y: 128, font: `110px ${FONT_HAND}`, color: C.green, opts: { shadow: C.purple, drips: 3 } }], 1024, 256);
@@ -443,9 +441,9 @@ const SOFT_SHADOW = (() => {
   return new THREE.CanvasTexture(c);
 })();
 // a hung frame: art (or empty canvas) + painted wooden frame + placard + light pool
-function hangFrame({ wallX, z, facing, artTex, aspect, placard, info, frameCol, accent, tilt }) {
+function hangFrame({ wallX, z, facing, artTex, aspect, placard, info, frameCol, accent, tilt, maxW = 1.7 }) {
   const g = new THREE.Group();
-  const H = 1.7, Wd = Math.min(1.7, H * aspect), h = Wd / aspect;
+  const H = 1.7, Wd = Math.min(maxW, H * aspect), h = Wd / aspect;
   const art = new THREE.Mesh(new THREE.PlaneGeometry(Wd, h), new THREE.MeshBasicMaterial({ map: artTex, color: 0xf2f2f2 }));
   art.position.z = 0.06; g.add(art);
   const fMat = new THREE.MeshLambertMaterial({ map: frameWoodTexture(frameCol, accent) });
@@ -599,7 +597,15 @@ function hideHint() { clearTimeout(hintTimer); $("hint").style.opacity = 0; }
 
 // modal
 function openInfo(info) {
-  if (info.empty) {
+  $("m-json").textContent = "drop JSON";
+  if (info.community) {
+    $("m-img").style.display = "block"; $("m-img").alt = info.alt || info.title;
+    try { $("m-img").src = info.canvas.toDataURL("image/jpeg", 0.85); } catch (e) { $("m-img").style.display = "none"; }
+    $("m-badge").textContent = info.badge; $("m-badge").className = "badge";
+    $("m-title").textContent = info.title; $("m-meta").textContent = info.meta || ""; $("m-desc").textContent = info.description || "";
+    $("m-full").style.display = "none";
+    $("m-json").style.display = ""; $("m-json").href = info.link; $("m-json").textContent = info.linkText;
+  } else if (info.empty) {
     $("m-img").src = ""; $("m-img").style.display = "none";
     $("m-badge").textContent = `Drop #${String(info.number).padStart(3, "0")}`; $("m-badge").className = "badge";
     $("m-title").textContent = "next drop coming…";
@@ -670,6 +676,33 @@ function onResize() {
 }
 addEventListener("resize", onResize);
 
+// anyone's corner + the living guestbook, on the entrance wall either side of the door.
+// Painted at once with honest fallbacks, then repainted when live data arrives (never blocks loading).
+function hangCommunity() {
+  const L = window.LFGStudio;
+  if (!L) return;
+  const cornerC = makeCanvas(1024, 788), gbC = makeCanvas(1024, 768);
+  L.paintCornerWall(cornerC, []);
+  L.paintGuestbook(gbC, [], { fixed: true });
+  const cornerT = tex(cornerC), gbT = tex(gbC);
+  const zf = Z_FRONT - 0.01;
+  const cornerInfo = { community: true, canvas: cornerC, badge: "anyone's corner", title: "everyone gets a wall",
+    meta: "newest guestbook signers + brand-new PoA miners", description: "No ranks, no balances, no scores. Newest first, and your first try hangs here.",
+    link: "../index.html#corner", linkText: "see it on the studio page", alt: "Painted wall: anyone's corner, everyone gets a wall, with name cards for new signers and miners" };
+  const gbInfo = { community: true, canvas: gbC, badge: "living guestbook", title: "one stroke per signer",
+    meta: "colour + shape from a hash of your public poa1 address (or your name)", description: "first stroke is yours. Sign the guestbook and your brushstroke appears here.",
+    link: L.URLS.sign, linkText: "✍️ sign the guestbook", alt: "The living guestbook painting" };
+  hangFrame({ wallX: -3.55, z: zf, facing: Math.PI, artTex: cornerT, aspect: 1024 / 788, maxW: 2.3, info: cornerInfo, frameCol: "#3fae1a", accent: C.green, tilt: rr(-0.02, 0.02),
+    placard: { badge: "anyone's corner", badgeColor: "#2fa000", right: "everyone", title: "everyone gets a wall", line: "newest first · no ranks · your first try hangs here", border: C.green } });
+  hangFrame({ wallX: 3.55, z: zf, facing: Math.PI, artTex: gbT, aspect: 1024 / 768, maxW: 2.3, info: gbInfo, frameCol: "#d4600f", accent: C.orange, tilt: rr(-0.02, 0.02),
+    placard: { badge: "living guestbook", badgeColor: C.orange, right: "live", title: "one stroke each", line: "colour + shape from your poa1 address hash", border: C.orange } });
+  L.loadCorner("../").then((items) => { L.paintCornerWall(cornerC, items); cornerT.needsUpdate = true; }).catch(() => {});
+  L.loadGuestbook().then((g) => {
+    const n = L.paintGuestbook(gbC, g.entries, { fixed: true }); gbT.needsUpdate = true;
+    if (n) gbInfo.description = `${n} brushstroke${n > 1 ? "s" : ""} so far, one per signer. Sign the guestbook and yours appears.`;
+  }).catch(() => {});
+}
+
 async function main() {
   // fonts first so the painted words use them
   const fontLoads = [`46px "FingerPaint"`, `46px "Bangers"`, `46px "GochiHand"`].map((f) => document.fonts.load(f).catch(() => null));
@@ -716,7 +749,8 @@ async function main() {
     hangFrame({ wallX: ROOM_W / 2 - 0.01, z: slotZ(j), facing: -Math.PI / 2, artTex: a.texture, aspect: a.aspect, info, frameCol: "#d4600f", accent: C.orange, tilt: rr(-0.03, 0.03),
       placard: { badge: t.label, badgeColor: C.orange, right: t.date, title: t.title, line: `painted by ${t.artist}`, border: C.orange } });
   });
-  // tour order: the timeline first, then test pieces (stops were pushed in that order)
+  hangCommunity();
+  // tour order: the timeline first, then test pieces, then the entrance wall (stops were pushed in that order)
 
   // start at the entrance looking down the room
   player.pos.set(0.6, EYE, Z_FRONT - 1.2); const portrait = innerWidth < innerHeight; player.yaw = portrait ? 0.06 : 0.28; player.pitch = portrait ? -0.1 : -0.02;
@@ -728,6 +762,6 @@ async function main() {
   showHint();
   renderer.setAnimationLoop(tick);
   // test hook for screenshots
-  window.__gallery = { gotoStop, stops, openInfo, player, setInstant(i) { gotoStop(i); player.pos.copy(stops[curStop].pos); player.yaw = stops[curStop].yaw; player.pitch = stops[curStop].pitch; glide = null; } };
+  window.__gallery = { gotoStop, stops, openInfo, player, applyCamera, setInstant(i) { gotoStop(i); player.pos.copy(stops[curStop].pos); player.yaw = stops[curStop].yaw; player.pitch = stops[curStop].pitch; glide = null; } };
 }
 main().catch((e) => { console.error(e); $("loadmsg").textContent = "Oops, the paint spilled. Try reloading 🙏"; });

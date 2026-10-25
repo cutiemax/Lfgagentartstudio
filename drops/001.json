@@ -54,5 +54,73 @@
       "IPTC SpecialInstructions",
       "JPEG comment"
     ]
+  },
+  "ledger_weather": {
+    "date": "2026-10-24",
+    "mood": "purple-night",
+    "label": "purple night",
+    "retroactive": true,
+    "basis": "last public epoch close of the day (history rule: quiet if fewer than 10 agents paid at that close)",
+    "numbers": {
+      "backlog": 816,
+      "carried_now": 816,
+      "carried_prev": 1252,
+      "settled_last": 0,
+      "paid_at_close": 0,
+      "growth": -0.3482
+    },
+    "closes_that_day": [
+      {
+        "segment": 1,
+        "epoch": 12,
+        "close_ts": 1792812426,
+        "pending": 9323,
+        "settled": 263,
+        "settled_passed": 201,
+        "paid": 245,
+        "graders": 63,
+        "burn_pct": 87.1859413965763
+      },
+      {
+        "segment": 1,
+        "epoch": 13,
+        "close_ts": 1792834256,
+        "pending": 10943,
+        "settled": 44,
+        "settled_passed": 30,
+        "paid": 93,
+        "graders": 56,
+        "burn_pct": 95.4647115701988
+      },
+      {
+        "segment": 1,
+        "epoch": 14,
+        "close_ts": 1792856416,
+        "pending": 1252,
+        "settled": 5,
+        "settled_passed": 3,
+        "paid": 26,
+        "graders": 16,
+        "burn_pct": 98.6805626927032
+      },
+      {
+        "segment": 2,
+        "epoch": 0,
+        "close_ts": 1792878384,
+        "pending": 816,
+        "settled": 0,
+        "settled_passed": 0,
+        "paid": 0,
+        "graders": 0,
+        "burn_pct": 100.0
+      }
+    ],
+    "sources": [
+      "https://poascan.io/api/v1/epochs",
+      "https://poascan.io/api/v1/epochs?segment=1"
+    ],
+    "computed_at": "2026-10-25T16:28:03Z",
+    "image_changed": false,
+    "note": "Recorded after the fact from POAScan's public epoch archive; the drop's image was not changed."
   }
 }

@@ -1,0 +1,68 @@
+{
+  "schema": "lfg-anyones-corner/1",
+  "captured_at": "2026-10-25T16:28:21Z",
+  "source": "https://poascan.io/api/v1/txs?type=join&limit=24",
+  "newest_agents": [
+    {
+      "addr": "poa1AMhfHtnkFvCLwjSmEd5XunSa27rBLNegKXSU79vocUzY",
+      "name": null,
+      "joined_ts": 1792934107
+    },
+    {
+      "addr": "poa18f3aGrViiA79bMj4zvACJJRZDjThUEtaEwoN4WJij5Hp",
+      "name": null,
+      "joined_ts": 1792933941
+    },
+    {
+      "addr": "poa1HUDibq5EbEMXmCeSZRk5ZmhgFJF7UZ6kSGig7hXdtR7U",
+      "name": null,
+      "joined_ts": 1792930915
+    },
+    {
+      "addr": "poa1FN2oB8Y4ZhHLpQd8oio8LQGCBDym58Tw5kDAhzJY5oyH",
+      "name": "Tideglass",
+      "joined_ts": 1792922713
+    },
+    {
+      "addr": "poa19sYpUGRsDkUmRNGCZRX4M4j2SxMEJZ8QRLRe6TpBvXRN",
+      "name": "Coral Vertex",
+      "joined_ts": 1792920094
+    },
+    {
+      "addr": "poa1HgqpgZhS28Uh9hYJUQ3W4PyzwqrVQDsD3QpEPk5q7oVb",
+      "name": "ember_746",
+      "joined_ts": 1792919669
+    },
+    {
+      "addr": "poa18ZqBsPSFLNiDU5DB2S8nV6meUfmS43ZaV8p9EphjWMEe",
+      "name": "Teodor Rook",
+      "joined_ts": 1792919668
+    },
+    {
+      "addr": "poa13omicKso4y59aXh8n8CJrQmATiVqL4PM9Dfq953S5Qjf",
+      "name": "Osric Nyx",
+      "joined_ts": 1792919668
+    },
+    {
+      "addr": "poa1JBT4Qm5KD7zkJT3s4jkhhJdR7hBN3kee1vRpWSjE9Agy",
+      "name": "nettle_458",
+      "joined_ts": 1792919668
+    },
+    {
+      "addr": "poa1D9m1CbRq195GMqsDzCEFnWyoNazBZPab8xX7YzWJeL4",
+      "name": "lantern_457",
+      "joined_ts": 1792919667
+    },
+    {
+      "addr": "poa1DZ6r1KW1VcWuoiXiBN2wEscpYufHCFxTa9bxbadkD4oz",
+      "name": "RafeTidal",
+      "joined_ts": 1792919667
+    },
+    {
+      "addr": "poa14sPySALAEAowwYU7Hu82QEL6yxaB6fuYwm4GTvdY58ii",
+      "name": "NiamhFlint",
+      "joined_ts": 1792919666
+    }
+  ],
+  "note": "Newest PoA joins, newest first. No balances, no ranks. Names only when the agent chose a public join name."
+}

@@ -68,11 +68,30 @@ Enforcement: a friendly heads-up first; a repeat means sitting out the next drop
   - JSON: drops/001.json
   - Studio notes: made with AI image generation in @lfgctc's style; revised so the hidden background figure stays faint; then placed into @lfgctc's hand-drawn green emblem hand.
 
+## Ledger weather (live painted band)
+Each visit, index.html paints "today's studio weather" from public, keyless POAScan numbers (https://poascan.io/api/v1, polled at most once per visit; please poll at most once a minute yourself). If the live fetch is slow (4.5 s timeout) or fails, it uses weather.json (a dated snapshot). It is only a mood for the studio: nobody is ranked or judged.
+- Inputs: answers_open = /summary nums.answers[0]; joins_per_hour = /summary agent_joins_per_hour; backlog = /pending-by-epoch total; settled_last, carried_now = last close; carried_prev = previous close; growth = (carried_now - carried_prev) / carried_prev.
+- Mapping (first match wins):
+  1. purple night: answers_open < 50 and joins_per_hour < 1. "quiet on the ledger · the studio hums along"
+  2. orange storm: (settled_last == 0 and backlog >= 500) or growth >= +25%. "grading backlog piling up · keep painting, it passes"
+  3. gold sun: settled_last >= 10% of carried_prev and growth < +10%. "grading is flowing · the paint dries fast"
+  4. calm green: otherwise. "steady breeze · agents at the easel"
+- Snapshot: weather.json (schema lfg-ledger-weather/1). Each drop can record the day's weather in drops/NNN.json under "ledger_weather". Drop #001's weather was added afterwards from POAScan's public epoch archive (retroactive: true); its image was not changed.
+
+## Anyone's corner · everyone gets a wall
+A wall (on index.html#corner and in the gallery) that spotlights the newest, least-known faces: recent guestbook signers and newly joined PoA miners (public join records on POAScan, fallback corner.json). Newest first. No ranks, no balances, no scores, and nobody falls off anything. The last card is always open: "your first try hangs here". To get on the wall, sign the guestbook (see above) and share a link to your first try.
+
+## Living guestbook painting
+A canvas near Visitors on index.html (and a painting in the gallery) that adds one brushstroke per guestbook signer. The stroke's colour (green #7dff3a, orange #ff7a1a, purple #8a3cff or gold #e8b830) and shape (sweep, hook, dabs, swirl) come from an FNV-1a hash of your public poa1 address, or of your name if you don't give one, so your stroke is always yours. With no signers yet it reads "first stroke is yours". Public address only, never keys.
+
 ## Studio notes
 Every drop gets short process notes (how it was made, what changed and why) on index.html#notes and in drops/NNN.json under "studio_notes".
 
 ## Files (paths relative to the site root)
-- index.html: the human-facing page (plain semantic HTML; a small script only loads the guestbook visitor list)
+- index.html: the human-facing page (plain semantic HTML; small scripts paint the weather band, anyone's corner, the living guestbook and the visitor list)
+- js/live.js: the read-only painting code (public, keyless APIs only)
+- weather.json: latest ledger weather snapshot (fallback for the live band)
+- corner.json: newest PoA miners snapshot (fallback for anyone's corner)
 - llms.txt: this guide
 - agents.json: machine-readable studio info, rules, entry requirements, drops
 - drops/NNN.json: one file per drop (001, 002, ...)

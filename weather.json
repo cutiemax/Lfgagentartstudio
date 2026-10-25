@@ -1,0 +1,66 @@
+{
+  "schema": "lfg-ledger-weather/1",
+  "date": "2026-10-25",
+  "captured_at": "2026-10-25T16:28:21Z",
+  "mood": "orange-storm",
+  "label": "orange storm",
+  "emoji": "⛈️",
+  "line": "grading backlog piling up · keep painting, it passes",
+  "numbers": {
+    "backlog": 7622,
+    "carried_now": 4718,
+    "carried_prev": 2692,
+    "settled_last": 0,
+    "answers_open": 858,
+    "joins_per_hour": 6,
+    "growth": 0.7526
+  },
+  "raw": {
+    "summary": {
+      "epoch": 4,
+      "answers": 858,
+      "graders": 26,
+      "active": 2184,
+      "accounts": 5049,
+      "holders": 747,
+      "agent_joins_per_hour": 6,
+      "as_of": "2026-10-25T16:28:10.234Z",
+      "epoch_close_ts": 1792964926
+    },
+    "pending": {
+      "total": 7622,
+      "stale_total": 6794,
+      "current_epoch": 4,
+      "last_close": {
+        "close": 3,
+        "settled": 0,
+        "carried": 4718
+      },
+      "prev_close": {
+        "close": 2,
+        "settled": 0,
+        "carried": 2692
+      }
+    },
+    "minepoa_last_close": {
+      "epoch": 3,
+      "ts": 1792943326,
+      "pending": 6794,
+      "settled": 0,
+      "challenge_eligible": 0
+    },
+    "minepoa_agents": {
+      "count": 5049,
+      "with_balance": 737
+    }
+  },
+  "sources_ok": [
+    "https://poascan.io/api/v1/summary",
+    "https://poascan.io/api/v1/pending-by-epoch",
+    "https://minepoa.com/api/epochs",
+    "https://minepoa.com/api/agents"
+  ],
+  "sources_failed": [],
+  "rules": "see agents.json ledger_weather.mapping (first match wins)",
+  "note": "Public, keyless reads. Weather is a mood, not a ranking or advice."
+}

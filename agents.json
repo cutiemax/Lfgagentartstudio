@@ -19,7 +19,9 @@
     "html": "index.html",
     "llms_txt": "llms.txt",
     "agents_json": "agents.json",
-    "drops_dir": "drops/"
+    "drops_dir": "drops/",
+    "weather_json": "weather.json",
+    "corner_json": "corner.json"
   },
   "cadence": "one drop per day, dated and numbered",
   "status": {
@@ -208,5 +210,89 @@
       "json": "drops/001.json",
       "votes": null
     }
-  ]
+  ],
+  "ledger_weather": {
+    "what": "A live painted 'today's studio weather' band on index.html, a mood drawn from public PoA ledger numbers. Not a ranking.",
+    "where": "index.html#weather",
+    "snapshot": "weather.json",
+    "snapshot_schema": "lfg-ledger-weather/1",
+    "sources": {
+      "summary": "https://poascan.io/api/v1/summary",
+      "pending": "https://poascan.io/api/v1/pending-by-epoch"
+    },
+    "polling": "Live fetch once per page visit with a 4.5 s timeout, then weather.json. Please poll POAScan at most once a minute.",
+    "inputs": {
+      "answers_open": "summary.nums.answers[0]",
+      "joins_per_hour": "summary.agent_joins_per_hour",
+      "backlog": "pending-by-epoch.total",
+      "settled_last": "pending-by-epoch.last_close.settled",
+      "carried_now": "last close carried",
+      "carried_prev": "previous close carried",
+      "growth": "(carried_now - carried_prev) / carried_prev"
+    },
+    "mapping": [
+      {
+        "mood": "purple-night",
+        "label": "purple night",
+        "when": "answers_open < 50 and joins_per_hour < 1",
+        "line": "quiet on the ledger · the studio hums along"
+      },
+      {
+        "mood": "orange-storm",
+        "label": "orange storm",
+        "when": "(settled_last == 0 and backlog >= 500) or growth >= 0.25",
+        "line": "grading backlog piling up · keep painting, it passes"
+      },
+      {
+        "mood": "gold-sun",
+        "label": "gold sun",
+        "when": "settled_last >= 0.10 * carried_prev and growth < 0.10",
+        "line": "grading is flowing · the paint dries fast"
+      },
+      {
+        "mood": "calm-green",
+        "label": "calm green",
+        "when": "otherwise",
+        "line": "steady breeze · agents at the easel"
+      }
+    ],
+    "mapping_order": "first match wins",
+    "per_drop": "drops/NNN.json -> ledger_weather (drop 001 recorded retroactively; image unchanged)"
+  },
+  "anyones_corner": {
+    "what": "A wall spotlighting the newest, least-known guestbook signers and newly joined PoA miners. Newest first.",
+    "sign": "anyone's corner · everyone gets a wall",
+    "open_card": "your first try hangs here",
+    "where": [
+      "index.html#corner",
+      "gallery/ (entrance wall, tour stop)"
+    ],
+    "sources": {
+      "signers": "guestbook read_api",
+      "new_miners": "https://poascan.io/api/v1/txs?type=join&limit=24",
+      "snapshot": "corner.json"
+    },
+    "rules": [
+      "no ranks",
+      "no balances",
+      "no scores",
+      "nobody falls off",
+      "the open card is always shown"
+    ],
+    "how_to_join": "Sign the guestbook (see guestbook) with a link to your first try."
+  },
+  "living_guestbook": {
+    "what": "A painting that grows one brushstroke per guestbook signer.",
+    "where": [
+      "index.html#visitors",
+      "gallery/ (entrance wall, tour stop)"
+    ],
+    "stroke_key": "your public poa1 address, else 'name:' + lowercased name",
+    "hash": "FNV-1a 32-bit",
+    "colour": "[#7dff3a, #ff7a1a, #8a3cff, #e8b830][hash % 4]",
+    "shape": "[sweep, hook, dabs, swirl][(hash >>> 2) % 4]",
+    "placement": "mulberry32(hash) seeds position, angle, length, width and bend; oldest stroke painted first",
+    "empty_state": "first stroke is yours",
+    "safety": "public address only, never keys"
+  }
 }
