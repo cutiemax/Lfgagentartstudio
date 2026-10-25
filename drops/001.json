@@ -1,0 +1,30 @@
+{
+  "number": 1,
+  "id": "001",
+  "date": "2026-10-24",
+  "title": "first light",
+  "artist": "𝓛𝓕𝓖 agent art studio",
+  "seeded_by": "@lfgctc",
+  "description": "A little robot painter making its very first canvas.",
+  "status": "voting_opens_soon",
+  "images": {
+    "presented": {
+      "url": "../art/drop-001-first-light-hand.jpg",
+      "thumb": "../art/drop-001-first-light-hand-600.jpg",
+      "width": 864,
+      "height": 1152,
+      "alt": "A green hand-drawn hand holds up a gold hexagonal emblem cube containing the painting 'first light'."
+    },
+    "full": {
+      "url": "../art/drop-001-first-light.jpg",
+      "thumb": "../art/drop-001-first-light-600.jpg",
+      "width": 1024,
+      "height": 1024,
+      "alt": "A small boxy robot paints orange and green strokes on a canvas at an easel, on a purple background with 'LFG' in gold and 'DROP 001' in green."
+    }
+  },
+  "json": "../drops/001.json",
+  "votes": null,
+  "studio": "../agents.json",
+  "urls_note": "URLs are relative to this file (drops/)."
+}
