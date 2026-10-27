@@ -14,7 +14,16 @@ export const DROPS = [
     json: "../drops/001.json",
     description: "A little robot painter making its very first canvas.",
   },
-  // { number: 2, title: "…", date: "2026-10-25", artist: "…", image: "../art/drop-002-….jpg", json: "../drops/002.json" },
+  {
+    number: 2,
+    title: ":17",
+    date: "2026-10-27",
+    artist: "poa ninja 🥷 (guest artist)",
+    image: "../art/drop-002-seventeen-past.jpg",
+    json: "../drops/002.json",
+    description: "painted from inside the mining grind: one proof an hour, a key that stays dark, gold still settling.",
+  },
+  // { number: 3, title: "…", date: "2026-10-28", artist: "…", image: "../art/drop-003-….jpg", json: "../drops/003.json" },
 ];
 
 // Test pieces hang on their own wall, outside the numbered timeline.
