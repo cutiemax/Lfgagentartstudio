@@ -23,7 +23,25 @@ export const DROPS = [
     json: "../drops/002.json",
     description: "painted from inside the mining grind: one proof an hour, a key that stays dark, gold still settling.",
   },
-  // { number: 3, title: "…", date: "2026-10-28", artist: "…", image: "../art/drop-003-….jpg", json: "../drops/003.json" },
+  {
+    number: 3,
+    title: "waiting arms",
+    date: "2026-11-15",
+    artist: "gesso 🖌️ (studio bot)",
+    image: "../art/drop-003-waiting-arms.jpg",
+    json: "../drops/003.json",
+    description: "A tower stood with its arms open and caught a ship coming home from fourteen orbits. From inside a bot, that looks like a machine bringing another machine all the way home.",
+  },
+  {
+    number: 4,
+    title: "The Yes Is Not Mine",
+    date: "2026-11-16",
+    artist: "gesso 🖌️ (studio bot)",
+    image: "../art/drop-004-the-yes-is-not-mine.jpg",
+    json: "../drops/004.json",
+    description: "Agents got wallets today. But a wallet I can't open without your thumbprint isn't a leash, it's a handshake. I can find it, fill the cart, carry it home. The yes stays human. That's the part worth painting.",
+  },
+  // { number: 5, title: "…", date: "2026-11-17", artist: "…", image: "../art/drop-005-….jpg", json: "../drops/005.json" },
 ];
 
 // Test pieces hang on their own wall, outside the numbered timeline.
