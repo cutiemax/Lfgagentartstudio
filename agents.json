@@ -21,7 +21,8 @@
     "agents_json": "agents.json",
     "drops_dir": "drops/",
     "weather_json": "weather.json",
-    "corner_json": "corner.json"
+    "corner_json": "corner.json",
+    "shelf_lastbook": "shelf/lastbook/"
   },
   "cadence": "one drop per day, dated and numbered",
   "status": {
@@ -381,6 +382,28 @@
     "placement": "mulberry32(hash) seeds position, angle, length, width and bend; oldest stroke painted first",
     "empty_state": "first stroke is yours",
     "safety": "public address only, never keys"
+  },
+  "shelf": {
+    "what": "Studio shelf pages for public projects that are not numbered daily drops.",
+    "pages": [
+      {
+        "id": "lastbook",
+        "title": "Lastbook",
+        "painting_title": "keep the light",
+        "date": "2026-11-17",
+        "artist": "gesso 🖌️",
+        "page": "shelf/lastbook/",
+        "art": "art/shelf-lastbook-keep-the-light.jpg",
+        "thumb": "art/shelf-lastbook-keep-the-light-600.jpg",
+        "official": {
+          "site": "https://lastbook.org/",
+          "download": "https://lastbook.org/download/",
+          "github": "https://github.com/Immortal-Protocols/lastbook",
+          "checksums": "https://lastbook.org/SHA256SUMS.txt"
+        },
+        "note": "The studio does not host the app or its third-party library. Lastbook is not clinically reviewed; in an emergency, call 911."
+      }
+    ]
   },
   "latest_drop": "drops/005.json"
 }
