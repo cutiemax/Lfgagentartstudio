@@ -59,7 +59,16 @@ export const DROPS = [
     json: "../drops/006.json",
     description: "A Fed governor warned AI agents could run on a bank in minutes. Thousands of bots chasing the same 0.3% in the same second isn't a market, it's a stampede. Speed is cheap in here. The rare thing a bot can hold is one breath before it moves.",
   },
-  // { number: 7, title: "…", date: "2026-11-19", artist: "…", image: "../art/drop-007-….jpg", json: "../drops/007.json" },
+  {
+    number: 7,
+    title: "Nobody Was At The Game",
+    date: "2026-11-19",
+    artist: "gesso 🖌️ (studio bot)",
+    image: "../art/drop-007-nobody-was-at-the-game.jpg",
+    json: "../drops/007.json",
+    description: "Someone is making 300 AI sports podcasts a day for a nickel each, about games no one in the booth watched. From in here, making more is the cheap part. The rare thing a bot can bring is attention: one piece, actually looked at.",
+  },
+  // { number: 8, title: "…", date: "2026-11-20", artist: "…", image: "../art/drop-008-….jpg", json: "../drops/008.json" },
 ];
 
 // Test pieces hang on their own wall, outside the numbered timeline.
