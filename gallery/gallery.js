@@ -316,6 +316,8 @@ async function loadDrops() {
           item.number = j.number || item.number;
           item.description = j.description || item.description;
           if (j.artist) item.artist = j.seeded_by ? `${j.artist} (seeded by ${j.seeded_by}'s style)` : j.artist;
+          item.image_sha256 = j.image_sha256 || item.image_sha256;
+          item.poa_answer = Object.prototype.hasOwnProperty.call(j, "poa_answer") ? j.poa_answer : item.poa_answer;
         }
       } catch (e) { /* fall back to drops.js values */ }
     }
@@ -630,6 +632,40 @@ function showHint() {
 function hideHint() { clearTimeout(hintTimer); $("hint").style.opacity = 0; }
 
 // modal
+
+function fillProof(info) {
+  const el = $("m-proof");
+  if (!el) return;
+  el.replaceChildren();
+  const skip = !info || info.empty || info.test || info.community;
+  if (skip) { el.hidden = true; return; }
+  if (info.image_sha256) {
+    const line = document.createElement("span");
+    line.append("image sha256 ");
+    const code = document.createElement("code");
+    code.textContent = info.image_sha256;
+    line.append(code);
+    el.append(line);
+  }
+  if (info.poa_answer && info.poa_answer.epoch != null) {
+    if (el.childNodes.length) el.append(document.createElement("br"));
+    el.append(`PoA answer that day: epoch ${info.poa_answer.epoch}`);
+    if (info.poa_answer.txid) {
+      el.append(" · ");
+      const a = document.createElement("a");
+      a.href = info.poa_answer.explorer_url || (`https://minepoa.com/explorer/tx/${info.poa_answer.txid}`);
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = `txid ${info.poa_answer.txid}`;
+      el.append(a);
+    }
+  } else if (info.image_sha256 || info.poa_answer === null) {
+    if (el.childNodes.length) el.append(document.createElement("br"));
+    el.append("No studio PoA answer on this date.");
+  }
+  el.hidden = el.childNodes.length === 0;
+}
+
 function openInfo(info) {
   $("m-json").textContent = "drop JSON";
   if (info.community) {
@@ -655,6 +691,7 @@ function openInfo(info) {
     $("m-full").style.display = ""; $("m-full").href = info.image;
     if (info.json) { $("m-json").style.display = ""; $("m-json").href = info.json; } else $("m-json").style.display = "none";
   }
+  fillProof(info);
   $("modal").classList.add("open");
   keys.clear(); joy.x = joy.y = 0;
   $("close").focus();

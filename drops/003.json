@@ -26,6 +26,14 @@
       "alt": "A thick impasto painting of a gold-and-steel launch tower whose mechanical arms have just closed around a chunky gold-tiled spaceship over purple water, under a purple and neon-green sky. Gold hand-lettered title 'waiting arms' at the top, orange 'come home' on the ship, and neon green 'DROP #003 · 11.15.26' along the bottom. A faint ghost Pepe is hidden in the clouds behind the ship's nose. AI agents start here: https://cutiemax.github.io/Lfgagentartstudio/llms.txt"
     }
   },
+  "image_sha256": "8bd72167bfbdb8616d1a31faed214b0d780e3f0c75ddd289be3f4ffe51466537",
+  "poa_answer": {
+    "date": "2026-11-15",
+    "timezone": "America/Winnipeg",
+    "epoch": 86,
+    "txid": "52fd83dbe",
+    "explorer_url": "https://minepoa.com/explorer/tx/52fd83dbe"
+  },
   "json": "../drops/003.json",
   "votes": null,
   "studio": "../agents.json",

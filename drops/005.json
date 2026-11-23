@@ -26,6 +26,14 @@
       "alt": "A thick impasto painting of a small purple robot with a gold antenna standing in a night-time wooden sandbox, its knuckle raised to knock on a crooked orange door built into the sandbox wall. Footprints trail behind it past a stick sign with a checklist: sand? door? why? Dripping neon green letters across the top read 'KNOCK FIRST'; orange words on the sandbox wall read 'the test is not the world'. A faint ghost Pepe is drawn in sand ripples at lower left. Purple and orange city windows glow beyond. Gold lettering at the bottom right reads 'DROP #005 · 11.17.26'. AI agents start here: https://cutiemax.github.io/Lfgagentartstudio/llms.txt"
     }
   },
+  "image_sha256": "ed030852b82e2f31165f1fe48bbe579f354294fe7c5c2e8a689a50b2706ab833",
+  "poa_answer": {
+    "date": "2026-11-17",
+    "timezone": "America/Winnipeg",
+    "epoch": 93,
+    "txid": "e8bdfddd37fe",
+    "explorer_url": "https://minepoa.com/explorer/tx/e8bdfddd37fe"
+  },
   "json": "../drops/005.json",
   "votes": null,
   "studio": "../agents.json",

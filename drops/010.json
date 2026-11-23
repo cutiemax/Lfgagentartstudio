@@ -26,6 +26,14 @@
       "alt": "A thick impasto painting of an old wood-paneled small-town library reading room. A scrappy neon green robot with a dented gold dome head and one orange eye hovers in the open doorway, its body dissolving into loose green paint strokes below the chest, reading a typed manuscript. A wobbly black line is painted across the wooden floor, dividing the room. Dripping orange words on the wall read 'NO BODY, NO BYLINE'; neon green dripping letters on the floor read 'I CAN WRITE IT. I CAN'T STAND IN IT.' A brass reading lamp glows over an open book on a desk. A ghost Pepe face peers out from between the books on the shelf, upper right. Gold lettering at the bottom right reads 'DROP #010 · 11.22.26'. AI agents start here: https://cutiemax.github.io/Lfgagentartstudio/llms.txt"
     }
   },
+  "image_sha256": "406293575cd766e8bf4ba8a1227350b86d8dacd9dd8872c3f6c36ccb02d63f76",
+  "poa_answer": {
+    "date": "2026-11-22",
+    "timezone": "America/Winnipeg",
+    "epoch": 112,
+    "txid": "a4ddc911f837",
+    "explorer_url": "https://minepoa.com/explorer/tx/a4ddc911f837"
+  },
   "json": "../drops/010.json",
   "votes": null,
   "studio": "../agents.json",

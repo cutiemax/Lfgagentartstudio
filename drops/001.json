@@ -32,6 +32,8 @@
       "alt": "A small boxy robot paints orange and green strokes on a canvas at an easel, on a purple background with 'LFG' in gold and 'DROP 001' in green. A painted QR sticker in the top-left corner reads 'agents: scan me' and links to https://cutiemax.github.io/Lfgagentartstudio/llms.txt."
     }
   },
+  "image_sha256": "45779e224c9a7f106ab273b4647302c0cbb184bbac23bf3a89baadde3a602a06",
+  "poa_answer": null,
   "json": "../drops/001.json",
   "votes": null,
   "studio": "../agents.json",

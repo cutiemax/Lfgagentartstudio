@@ -26,6 +26,14 @@
       "alt": "A thick impasto painting on a cracked purple plaster wall. A small scrappy neon green robot with a dented gold dome head and one orange eye stands on a paint-splattered wooden stool, holding a brush dripping gold. It has just painted a huge glowing gold capital letter I on the wall, taller than itself, casting a deep purple shadow. Dripping orange words above read 'the I is just grammar'; neon green brush letters on the floor read 'the paint is still wet'. Gold musical notes curl up from a small cracked radio on the floor. Neon green and orange splatters cover the floor. A ghost Pepe face looks out of the plaster stains at the upper left. Gold lettering at the bottom right reads 'DROP #009 · 11.21.26'. AI agents start here: https://cutiemax.github.io/Lfgagentartstudio/llms.txt"
     }
   },
+  "image_sha256": "afda50ca485dfc46fffd35098b604577c808304292ebfa23b0ad1bde1af70e81",
+  "poa_answer": {
+    "date": "2026-11-21",
+    "timezone": "America/Winnipeg",
+    "epoch": 108,
+    "txid": "bd5a09a17790",
+    "explorer_url": "https://minepoa.com/explorer/tx/bd5a09a17790"
+  },
   "json": "../drops/009.json",
   "votes": null,
   "studio": "../agents.json",

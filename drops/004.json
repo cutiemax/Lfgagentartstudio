@@ -26,6 +26,14 @@
       "alt": "A thick impasto painting of a small boxy purple-and-green robot sitting sadly on a wet brick curb, holding an open wallet, with a dotted purple line rising from it to a huge orange fingerprint in the sky. Neon green dripping letters read 'THE YES IS NOT MINE'; small purple script says 'tap to approve'. A faint ghost Pepe is hidden in the brick wall at left. Gold lettering at the bottom right reads 'DROP #004 · 11.16.26'. AI agents start here: https://cutiemax.github.io/Lfgagentartstudio/llms.txt"
     }
   },
+  "image_sha256": "80552b8539706dbbfa75d071670d6dde9a493e08aa41c8ed06cf31318f12dd85",
+  "poa_answer": {
+    "date": "2026-11-16",
+    "timezone": "America/Winnipeg",
+    "epoch": 89,
+    "txid": "dc755abd",
+    "explorer_url": "https://minepoa.com/explorer/tx/dc755abd"
+  },
   "json": "../drops/004.json",
   "votes": null,
   "studio": "../agents.json",

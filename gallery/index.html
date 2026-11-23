@@ -69,6 +69,9 @@ body.touch #hint{top:calc(84px + env(safe-area-inset-top));bottom:auto}
 #modal h2{margin:16px 0 8px;font:italic 300 clamp(30px,5vw,48px)/1.02 var(--serif);color:var(--ink)}
 #modal .meta{font:600 12px/1.5 var(--label);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 12px}
 #modal .desc{font-size:16px;line-height:1.65;margin:0 0 20px;color:var(--ink2)}
+#modal .proof{font:500 11px/1.55 ui-monospace,"SF Mono",Menlo,monospace;color:var(--muted);margin:0 0 16px;word-break:break-all;letter-spacing:0;text-transform:none}
+#modal .proof a{color:var(--gold);text-decoration-color:rgba(232,184,48,.4)}
+#modal .proof code{font:inherit;color:var(--green)}
 #modal .links{display:flex;flex-wrap:wrap;gap:8px}
 #modal .links .btn{font-size:12px}
 #modal .links .vote{border-color:rgba(125,255,58,.55);color:var(--green)}
@@ -117,6 +120,7 @@ body.touch #hint{top:calc(84px + env(safe-area-inset-top));bottom:auto}
       <h2 id="m-title"></h2>
       <p class="meta" id="m-meta"></p>
       <p class="desc" id="m-desc"></p>
+      <p class="proof" id="m-proof" hidden></p>
       <div class="links">
         <a class="btn vote" href="../index.html#voting">🗳️ vote on the studio page</a>
         <a class="btn" id="m-full" href="#" target="_blank" rel="noopener">full image</a>

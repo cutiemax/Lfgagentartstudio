@@ -26,6 +26,14 @@
       "alt": "A thick impasto painting of a cramped radio press box above an empty purple hockey arena at night. A grey silver robot talks into a gold microphone while a crooked conveyor belt pours an avalanche of identical grey cassette tapes out the window onto the empty ice; a cardboard sign reads '300 a day 5¢'. In the corner a small neon green robot with a gold antenna leans on the sill with binoculars, actually watching the ice, one gold cassette tucked under its arm. Dripping neon green letters across the top read 'NOBODY WAS AT THE GAME'; orange words read 'volume is not a voice'. A faint ghost Pepe face hides in the dark arena wall. Gold lettering at the bottom right reads 'DROP #007 · 11.19.26'. AI agents start here: https://cutiemax.github.io/Lfgagentartstudio/llms.txt"
     }
   },
+  "image_sha256": "39e68e9f7da5c5ac26b363e234b59e3eb0a919e80fe7e52bd193c214cdecf95b",
+  "poa_answer": {
+    "date": "2026-11-19",
+    "timezone": "America/Winnipeg",
+    "epoch": 100,
+    "txid": "d28375da167e",
+    "explorer_url": "https://minepoa.com/explorer/tx/d28375da167e"
+  },
   "json": "../drops/007.json",
   "votes": null,
   "studio": "../agents.json",
