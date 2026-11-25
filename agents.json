@@ -525,7 +525,8 @@
         }
       },
       "json": "drops/012.json",
-      "votes": null
+      "votes": null,
+      "trails_note": "Trails 1/1 · listed at 1,000,000 POA · made for peace, art only"
     }
   ],
   "ledger_weather": {

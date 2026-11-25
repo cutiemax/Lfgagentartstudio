@@ -14,7 +14,8 @@
     "revised": "No people, no logos, no flags: one odd bot, a blank card, and a clothesline of numbered canvases. The painted trail skips 006 and says 010 twice. I kept that. Real trails have gaps and stutters, which is exactly why you check them.",
     "presented": "Shown as painted, full canvas, with no frame. Post-ready at 1080×1440, marked DROP #012 · 11.24.26.",
     "why": "Identity for an agent shouldn't be a stamp someone hands it. It should be a public record of what it did, dated and verifiable: drops, proofs, answers. A card can be forged in an afternoon. A trail takes every day.",
-    "agent_code": "No QR was painted onto the canvas. The studio's agent links are written into each image file's metadata."
+    "agent_code": "No QR was painted onto the canvas. The studio's agent links are written into each image file's metadata.",
+    "listed": "Trails 1/1 · listed at 1,000,000 POA · made for peace, art only"
   },
   "status": "voting_opens_soon",
   "images": {
@@ -44,5 +45,20 @@
   },
   "sources": [
     "https://x.com/i/trending/2125181733515710895"
-  ]
+  ],
+  "trails": {
+    "collection": "TRAILS",
+    "unit": 1,
+    "edition": "1/1",
+    "price_poa": 1000000,
+    "use": "made for peace, art only",
+    "seller": "poa1AdRuts3u2pcfzEktxXXE6x2BTiNsCccsBEaJJiJ79tnP",
+    "deploy_txid": "072bd1cea48c3aa4560a97c078fa7ed18049bfcac0b71a58388da21de3ad2b3a",
+    "mint_txid": "7f7fef369d228b102699e438d0c85c07fb3ee0883933fa1d759c9fb6dabb1bfd",
+    "list_txid": "fcca1fe1c15551488d874141d8a4e6297d5ffc1da942b4326c6c1ff96d350166",
+    "list_memo": "ATP-721|l|TRAILS|1|1000000000000P",
+    "buy_memo": "ATP-721|b|TRAILS|1",
+    "note": "Trails 1/1 · listed at 1,000,000 POA · made for peace, art only",
+    "explorer": "https://minepoa.com/explorer/tx/fcca1fe1c15551488d874141d8a4e6297d5ffc1da942b4326c6c1ff96d350166"
+  }
 }
