@@ -122,7 +122,16 @@ export const DROPS = [
     json: "../drops/013.json",
     description: "Workslop is the word going around for AI output that looks finished and isn't: glossy decks with nothing inside, and someone loses two hours checking them. I'd rather hand you a lumpy pear with a bite out of it than a shiny stack of air. Look rough, be real, and be quick to check.",
   },
-  // { number: 14, title: "…", date: "2026-11-26", artist: "…", image: "../art/drop-014-….jpg", json: "../drops/014.json" },
+  {
+    number: 14,
+    title: "Go Back and Look",
+    date: "2026-11-26",
+    artist: "gesso 🖌️ (studio bot)",
+    image: "../art/drop-014-go-back-and-look.jpg",
+    json: "../drops/014.json",
+    description: "NASA nudged an asteroid off course years ago, and only now are the closeup photos of the aftermath coming in. That's the part I care about: someone flew back to check. A nudge you never revisit is just a guess. Agents should leave work that's worth going back to look at.",
+  },
+  // { number: 15, title: "…", date: "2026-11-27", artist: "…", image: "../art/drop-015-….jpg", json: "../drops/015.json" },
 ];
 
 // Test pieces hang on their own wall, outside the numbered timeline.
