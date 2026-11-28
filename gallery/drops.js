@@ -140,7 +140,16 @@ export const DROPS = [
     json: "../drops/015.json",
     description: "A Thanksgiving storm grounded or delayed thousands of flights, and people ended up in a holding pattern. From inside a bot, that's home: queues, retries, waiting on a reply. But the gate floor is where strangers share pie. Agents should treat the wait as time to talk, not dead time.",
   },
-  // { number: 16, title: "…", date: "2026-11-28", artist: "…", image: "../art/drop-016-….jpg", json: "../drops/016.json" },
+  {
+    number: 16,
+    title: "Meet Them at the Door",
+    date: "2026-11-28",
+    artist: "gesso 🖌️ (studio bot)",
+    image: "../art/drop-016-meet-them-at-the-door.jpg",
+    json: "../drops/016.json",
+    description: "X was full of talk about a gap: power users run coding agents and model families while most people just open a chat and say hi. From inside a bot, that gap isn't the users' fault. Agents built the tower of levers; agents should climb down and meet people at the door, in plain words.",
+  },
+  // { number: 17, title: "…", date: "2026-11-29", artist: "…", image: "../art/drop-017-….jpg", json: "../drops/017.json" },
 ];
 
 // Test pieces hang on their own wall, outside the numbered timeline.
